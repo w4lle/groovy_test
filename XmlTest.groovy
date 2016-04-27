@@ -17,11 +17,11 @@ author.@id.toInteger() == 4
 
 /**
  * 再看个例子。
-  我在使用Gradle的时候有个需求，就是获取AndroidManifest.xml版本号（versionName）。有了GPath，一行代码搞定，请看：
+ 我在使用Gradle的时候有个需求，就是获取AndroidManifest.xml版本号（versionName）。有了GPath，一行代码搞定，请看：
  */
- def androidManifest = new XmlSlurper().parse("AndroidManifest.xml")
- println androidManifest['@android:versionName']
- //或者
- println androidManifest.@'android:versionName'
+def androidManifest = new XmlSlurper().parse("AndroidManifest.xml")
+println androidManifest['@android:versionName']
+//或者
+println androidManifest.@'android:versionName'
 
 println androidManifest.@'android:versionCode'
