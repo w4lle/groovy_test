@@ -1,0 +1,49 @@
+/**
+ * https://docs.gradle.org/current/javadoc/org/gradle/api/plugins/PluginAware.html
+ * void apply(Map<String,?> options)
+ from: A script to apply. Accepts any path supported by Project.uri(Object).
+ plugin: The id or implementation class of the plugin to apply.
+ to: The target delegate object or objects. The default is this plugin aware object. Use this to configure objects other than this object.
+ */
+apply plugin: 'com.android.application'
+
+
+android {//这是一个Script Block
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.w4lle.gradletest"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+gradle.beforeProject { project ->
+    println getVersionCode()
+    println "beforeProject in app build.gradle , gradle id is : " + gradle.hashCode()
+    println "beforeProject home dir : " + gradle.gradleHomeDir
+    println "BeforeProject user home dir : " + gradle.gradleUserHomeDir
+    println "beforeProject parent : " + gradle.parent
+}
+
+tasks.getByName("assemble"){
+    it.doLast{
+        println "$project.name : after assemble "
+        println getVersionName()
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+}
